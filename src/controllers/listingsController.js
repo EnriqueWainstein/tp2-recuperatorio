@@ -1,4 +1,4 @@
-import { getListings, getListingById } from "../services/listingsService.js";
+import { getListings, getListingById ,getListingsByType,getListingsByHost, getListingTotalPrice } from "../services/listingsService.js";
 
 export const getAllListings = async (req, res) => {
     try {
@@ -24,3 +24,35 @@ export const getListingId = async (req, res) => {
     }
 };
 
+export const getListingsType = async  (req, res) =>{
+    try{
+        const type = req.params.type;
+        const listing = await getListingsByType(type);
+        res.json(listing);
+    }catch (error) {
+        console.log("Error fetching listing: ", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getListingsHost = async (req,res) =>{
+   try {
+            const host_id = req.params.type;
+            const listing = await getListingsByHost(host_id);
+            res.json(listing);
+   }catch (error){
+    console.log("Error fetching listing", error);
+    res.status(500).json({message: "error interno"})
+   }
+
+};
+
+export const getListbyTotalPrice = async (req,res) =>{
+    try {
+        const listing = await getListingTotalPrice();
+        res.json(listing);
+    }catch (error){
+    console.log("Error fetching listing", error);
+    res.status(500).json({message: "error interno"})
+   }
+};
